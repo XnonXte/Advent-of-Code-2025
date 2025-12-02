@@ -1,21 +1,60 @@
+import os
+
 DAY = 1  # Fill in the day.
 
 
 def main():
     try:
-        with open("./data.txt") as f:
-            data = [line.replace("\n", "") for line in f.readlines()]
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        data_path = os.path.join(script_dir, "data.txt")
+        with open(data_path) as f:
+            data = [line.strip() for line in f.readlines()]
             print("ADVENT OF CODE 2025")
             print("Copyright (C) XnonXte 2025")
             print("=================================================")
-            answer = solution(data)
-            print(f"Day {DAY} Answer: {answer}")
+            part_1_answer, part_2_answer = solution(data)
+            print(f"Day {DAY} answers:")
+            print(f"Part 1: {part_1_answer}")
+            print(f"Part 2: {part_2_answer}")
     except FileNotFoundError:
         print("Data file not found!")
+    except Exception as e:
+        print(f"Error: {e}")
 
 
 def solution(data):
-    count = 0
+    return part_1(data), part_2(data)
+
+
+def part_1(data):
+    answer = 0
+    dial = 50
+    for i in range(len(data)):
+        instruction = data[i]
+        rotation = int(instruction[1:])
+        if instruction[0] == "L":
+            remaining_rotation = rotation
+            while remaining_rotation > 0:
+                dial -= 1
+                remaining_rotation -= 1
+                if dial < 0:
+                    dial = 99
+            if dial == 0:
+                answer += 1
+        elif instruction[0] == "R":
+            remaining_rotation = rotation
+            while remaining_rotation > 0:
+                dial += 1
+                remaining_rotation -= 1
+                if dial > 99:
+                    dial = 0
+            if dial == 0:
+                answer += 1
+    return answer
+
+
+def part_2(data):
+    answer = 0
     dial = 50
     for i in range(len(data)):
         instruction = data[i]
@@ -33,7 +72,7 @@ def solution(data):
                 # If the dial excedeed the left-most dial.
                 if dial < 0:
                     dial = 99
-            count += point_at_0
+            answer += point_at_0
         elif instruction[0] == "R":
             # Same procedure as the left rotation just to the right.
             remaining_rotation = rotation
@@ -46,8 +85,8 @@ def solution(data):
                 # If the dial excedeed the right-most dial.
                 if dial > 99:
                     dial = 0
-            count += point_at_0
-    return count
+            answer += point_at_0
+    return answer
 
 
 if __name__ == "__main__":
