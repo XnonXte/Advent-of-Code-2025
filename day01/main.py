@@ -27,6 +27,7 @@ def solution(data):
 
 
 def part_1(data):
+    # Same as part 2 but without checking if the dial points at 0 at any given rotation.
     answer = 0
     dial = 50
     for i in range(len(data)):

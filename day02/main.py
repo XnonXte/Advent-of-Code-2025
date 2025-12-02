@@ -34,21 +34,43 @@ def solution(data):
 def part_1(data):
     answer = 0
     for id_range in data:
-        floor = int(id_range.split("-")[0])
-        ceil = int(id_range.split("-")[1])
-        current_id = floor
-        while current_id <= ceil:
-            current_id_str = str(current_id)
-            if len(current_id_str) % 2 == 0:
-                mid_index = len(current_id_str) // 2
-                if current_id_str[:mid_index] == current_id_str[mid_index:]:
-                    answer += current_id
-            current_id += 1
+        id_range_split = id_range.split("-")
+        id_start_range = int(id_range_split[0])
+        id_stop_range = int(id_range_split[1])
+        id_int = id_start_range
+        while id_int <= id_stop_range:
+            id_str = str(id_int)
+            id_len = len(id_str)
+            # Length of ID needs to be even to compare each halves.
+            if id_len % 2 == 0:
+                mid_index = id_len // 2
+                # Split each halves and compare them.
+                if id_str[:mid_index] == id_str[mid_index:]:
+                    answer += id_int
+            id_int += 1
     return answer
 
 
 def part_2(data):
     answer = 0
+    for id_range in data:
+        id_range_split = id_range.split("-")
+        id_start_range = int(id_range_split[0])
+        id_stop_range = int(id_range_split[1])
+        id_int = id_start_range
+        while id_int <= id_stop_range:
+            id_str = str(id_int)
+            id_len = len(id_str)
+            # Divide id into several same size chunks.
+            for size in range(1, id_len):
+                if id_len % size == 0:
+                    chunks = [id_str[i : i + size] for i in range(0, id_len, size)]
+                    # Check if all the chunks are equal.
+                    all_equal = all(x == chunks[0] for x in chunks)
+                    if all_equal:
+                        answer += id_int
+                        break # Only one of the chunk size need to be equal.
+            id_int += 1
     return answer
 
 
