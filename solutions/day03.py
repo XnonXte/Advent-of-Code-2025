@@ -1,6 +1,6 @@
 import os
 
-DAY: int = 0  # Fill in the day.
+DAY: int = 3  # Fill in the day.
 
 
 def main() -> None:
@@ -32,13 +32,19 @@ def read_data(data_path: str) -> list[str]:
 
 
 def part_1(data: list[str]) -> int:
-    # TODO: implement part 1
     answer: int = 0
+    for bank in data:
+        largest_joltage: int = 0
+        for i in range(len(bank) - 1):
+            for j in range(i + 1, len(bank)):
+                joltage = int(bank[i] + bank[j])
+                if joltage > largest_joltage:
+                    largest_joltage = joltage
+        answer += largest_joltage
     return answer
 
 
 def part_2(data: list[str]) -> int:
-    # TODO: implement part 2
     answer: int = 0
     return answer
 
