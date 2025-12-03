@@ -23,11 +23,13 @@ def main():
 
     except FileNotFoundError:
         print("Data file not found!")
+    except Exception as e:
+        print(f"Error: {e}")
 
 
 def solution(data):
     # Day 2 only fix.
-    data = [id_range for id_range in data[0].split(",")]
+    data = data[0].split(",")
     return part_1(data), part_2(data)
 
 
