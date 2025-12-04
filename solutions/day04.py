@@ -1,5 +1,6 @@
 import os
 import time
+from sys import argv
 
 DAY: int = 4  # Fill in the day.
 Location = list[list[str]]
@@ -7,8 +8,10 @@ Location = list[list[str]]
 
 def main() -> None:
     try:
-        script_dir: str = os.path.dirname(os.path.abspath(__file__))
-        data_path: str = os.path.join(script_dir, "data.txt")
+        if len(argv) != 2:
+            print("Usage: day<number>.py <input_path>")
+            return
+        data_path: str = argv[1]
         data: Location = [
             list(line) for line in read_data(data_path)
         ]  # Day 4 only fix.
@@ -16,7 +19,7 @@ def main() -> None:
         part_2_answer: int = part_2(data)
         print_answers(part_1_answer, part_2_answer)
     except FileNotFoundError:
-        print("Data file not found!")
+        print("Input file not found!")
     except Exception as e:
         print(f"Error: {e}")
 

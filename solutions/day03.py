@@ -1,18 +1,20 @@
 import os
+from sys import argv
 
 DAY: int = 3  # Fill in the day.
 
 
 def main() -> None:
     try:
-        script_dir: str = os.path.dirname(os.path.abspath(__file__))
-        data_path: str = os.path.join(script_dir, "data.txt")
-        data: list[str] = read_data(data_path)
+        if len(argv) != 2:
+            print("Usage: day<number>.py <input_path>")
+            return
+        data: list[str] = read_data(argv[1])
         part_1_answer: int = part_1(data)
         part_2_answer: int = part_2(data)
         print_answers(part_1_answer, part_2_answer)
     except FileNotFoundError:
-        print("Data file not found!")
+        print("Input file not found!")
     except Exception as e:
         print(f"Error: {e}")
 
@@ -61,11 +63,12 @@ def part_2(data: list[str]) -> int:
                 if (max_digit is None) or (d > max_digit):
                     max_digit = d
                     max_idx = i
-                    if max_digit == '9':
+                    if max_digit == "9":
                         break
             result_digits.append(max_digit)
             start = max_idx + 1
-        return int(''.join(result_digits))
+        return int("".join(result_digits))
+
     answer: int = 0
     for bank in data:
         largest_joltage = max_subseq_12(bank)

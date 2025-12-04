@@ -1,32 +1,38 @@
 import os
+from sys import argv
 
 DAY = 1  # Fill in the day.
 
 
 def main():
     try:
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        data_path = os.path.join(script_dir, "data.txt")
-        with open(data_path) as f:
-            data = [line.strip() for line in f.readlines()]
-            print("ADVENT OF CODE 2025")
-            print("Copyright (C) XnonXte 2025")
-            print("=================================================")
-            part_1_answer, part_2_answer = solution(data)
-            print(f"Day {DAY} answers:")
-            print(f"Part 1: {part_1_answer}")
-            print(f"Part 2: {part_2_answer}")
+        if len(argv) != 2:
+            print("Usage: day<number>.py <input_path>")
+            return
+        data = read_data(argv[1])
+        print("ADVENT OF CODE 2025")
+        print("Copyright (C) XnonXte 2025")
+        print("=================================================")
+        part_1_answer, part_2_answer = solution(data)
+        print(f"Day {DAY} answers:")
+        print(f"Part 1: {part_1_answer}")
+        print(f"Part 2: {part_2_answer}")
     except FileNotFoundError:
-        print("Data file not found!")
+        print("Input file not found!")
     except Exception as e:
         print(f"Error: {e}")
 
 
-def solution(data):
+def solution(data: list[str]) -> tuple[int, int]:
     return part_1(data), part_2(data)
 
 
-def part_1(data):
+def read_data(data_path: str) -> list[str]:
+    with open(data_path) as f:
+        return [line.strip() for line in f.readlines()]
+
+
+def part_1(data: list[str]) -> int:
     # Same as part 2 but without checking if the dial points at 0 at any given rotation.
     answer = 0
     dial = 50
@@ -54,7 +60,7 @@ def part_1(data):
     return answer
 
 
-def part_2(data):
+def part_2(data: list[str]) -> int:
     answer = 0
     dial = 50
     for i in range(len(data)):
