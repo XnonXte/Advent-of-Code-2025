@@ -45,7 +45,31 @@ def part_1(data: list[str]) -> int:
 
 
 def part_2(data: list[str]) -> int:
+    def max_subseq_12(bank: str) -> int:
+        n = len(bank)
+        if n < 12:
+            return 0
+        need = 12
+        start = 0
+        result_digits = []
+        for rem in range(need, 0, -1):
+            max_digit = None
+            max_idx = -1
+            upper = n - rem + 1
+            for i in range(start, upper):
+                d = bank[i]
+                if (max_digit is None) or (d > max_digit):
+                    max_digit = d
+                    max_idx = i
+                    if max_digit == '9':
+                        break
+            result_digits.append(max_digit)
+            start = max_idx + 1
+        return int(''.join(result_digits))
     answer: int = 0
+    for bank in data:
+        largest_joltage = max_subseq_12(bank)
+        answer += largest_joltage
     return answer
 
 
