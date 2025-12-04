@@ -15,6 +15,7 @@ def main() -> None:
         print("Data file not found!")
     except Exception as e:
         print(f"Error: {e}")
+    
 
 
 def print_answers(part_1_answer: int, part_2_answer: int) -> None:
@@ -31,7 +32,7 @@ def read_data(data_path: str) -> list[str]:
         return [line.strip() for line in f.readlines()]
 
 
-def check_if_safe(data: list[list[str]], i: int, j: int) -> bool:
+def check_is_paper(data: list[list[str]], i: int, j: int) -> bool:
     try:
         if (i < 0 or j < 0):
             return False 
@@ -40,12 +41,12 @@ def check_if_safe(data: list[list[str]], i: int, j: int) -> bool:
         return False
     
     
-def invert_paper(data: list[list[str]]) -> tuple[list[list[str]], int]: 
+def invert_valid_papers(data: list[list[str]]) -> tuple[list[list[str]], int]: 
     total_inverted = 0
     for i in range(len(data)):
         for j in range(len(data[i])):
             if data[i][j] == "@":
-                indexes_pair = [
+                adjecent_indexes = [
                 [i + 1, j], 
                 [i, j + 1], 
                 [i - 1 , j], 
@@ -55,8 +56,7 @@ def invert_paper(data: list[list[str]]) -> tuple[list[list[str]], int]:
                 [i + 1, j + 1], 
                 [i - 1, j - 1], 
                 ]
-                eight_adjacent_checks = list(check_if_safe(data, i, j) for i, j in indexes_pair) 
-                if (sum(eight_adjacent_checks) < 4):
+                if sum(list(check_is_paper(data, i, j) for i, j in adjecent_indexes)) < 4:
                     data[i][j] = "."
                     total_inverted += 1
     return data, total_inverted
@@ -67,7 +67,7 @@ def part_1(data: list[list[str]]) -> int:
     for i in range(len(data)):
         for j in range(len(data[i])):
             if data[i][j] == "@":
-                indexes_pair = [
+                adjecent_indexes = [
                 [i + 1, j], 
                 [i, j + 1], 
                 [i - 1 , j], 
@@ -77,20 +77,19 @@ def part_1(data: list[list[str]]) -> int:
                 [i + 1, j + 1], 
                 [i - 1, j - 1], 
                 ]
-                eight_adjacent_checks = list(check_if_safe(data, i, j) for i, j in indexes_pair) 
-                if (sum(eight_adjacent_checks) < 4):
+                if sum(list(check_is_paper(data, i, j) for i, j in adjecent_indexes)) < 4:
                     answer += 1
     return answer
 
 def part_2(data: list[list[str]]) -> int: 
-   answer: int = 0
-   while True:
-       data, total_inverted = invert_paper(data)
-       if (total_inverted == 0):
-           break
-       else:
-           answer += total_inverted
-   return answer
+    answer: int = 0
+    while True:
+        data, total_inverted = invert_valid_papers(data)
+        if (total_inverted == 0):
+            break
+        else:
+            answer += total_inverted
+    return answer
 
 
 
