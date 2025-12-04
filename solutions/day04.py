@@ -1,13 +1,14 @@
 import os
 
 DAY: int = 4  # Fill in the day.
+Location = list[list[str]]
 
 
 def main() -> None:
     try:
         script_dir: str = os.path.dirname(os.path.abspath(__file__))
         data_path: str = os.path.join(script_dir, "data.txt")
-        data: list[list[str]] = [list(line) for line in read_data(data_path)] # Day 4 only fix.
+        data: Location = [list(line) for line in read_data(data_path)] # Day 4 only fix.
         part_1_answer: int = part_1(data)
         part_2_answer: int = part_2(data)
         print_answers(part_1_answer, part_2_answer)
@@ -32,7 +33,7 @@ def read_data(data_path: str) -> list[str]:
         return [line.strip() for line in f.readlines()]
 
 
-def check_is_paper(data: list[list[str]], i: int, j: int) -> bool:
+def check_is_paper(data: Location, i: int, j: int) -> bool:
     try:
         if (i < 0 or j < 0):
             return False 
@@ -41,7 +42,7 @@ def check_is_paper(data: list[list[str]], i: int, j: int) -> bool:
         return False
     
     
-def invert_valid_papers(data: list[list[str]]) -> tuple[list[list[str]], int]: 
+def invert_valid_papers(data: Location) -> tuple[Location, int]: 
     total_inverted = 0
     for i in range(len(data)):
         for j in range(len(data[i])):
@@ -62,7 +63,7 @@ def invert_valid_papers(data: list[list[str]]) -> tuple[list[list[str]], int]:
     return data, total_inverted
 
 
-def part_1(data: list[list[str]]) -> int:
+def part_1(data: Location) -> int:
     answer: int = 0
     for i in range(len(data)):
         for j in range(len(data[i])):
@@ -81,7 +82,7 @@ def part_1(data: list[list[str]]) -> int:
                     answer += 1
     return answer
 
-def part_2(data: list[list[str]]) -> int: 
+def part_2(data: Location) -> int: 
     answer: int = 0
     while True:
         data, total_inverted = invert_valid_papers(data)
