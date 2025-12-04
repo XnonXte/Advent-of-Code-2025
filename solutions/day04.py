@@ -77,7 +77,7 @@ def invert_valid_papers(data: Location) -> tuple[Location, int]:
 #             print(char, end="")
 #         print()
 #     time.sleep(0.5)
-#     os.system("cls")
+#     os.system("cls" if os.name == "nt" else "clear")
 
 
 def part_1(data: Location) -> int:
