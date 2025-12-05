@@ -1,4 +1,3 @@
-import os
 from sys import argv
 
 DAY = 1  # Fill in the day.
