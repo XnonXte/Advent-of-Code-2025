@@ -45,21 +45,36 @@ def split_data(data: list[str]) -> tuple[list[str], list[str]]:
 
 def part_1(data: list[str]) -> int:
     answer: int = 0
-    fresh_id_ranges, ids = split_data(data)
+    ranges, ids = split_data(data)
     for id in ids:
         id = int(id)
-        for fresh_id_range in fresh_id_ranges:
-            id_range_split = fresh_id_range.split("-")
-            start, end = int(id_range_split[0]), int(id_range_split[1])
+        for r in ranges:
+            r_split = r.split("-")
+            start, end = int(r_split[0]), int(r_split[1])
             if id >= start and id <= end:
                 answer += 1
                 break
     return answer
 
-
 def part_2(data: list[str]) -> int:
-    # TODO: implement part 2
     answer: int = 0
+    id_ranges, _ = split_data(data)
+    sorted_id_ranges = sorted(id_ranges, key=lambda r: int(r.split("-")[0]))
+    ranges = [
+        (int(r.split("-")[0]), int(r.split("-")[1]))
+        for r in sorted_id_ranges
+    ]
+    merged = []
+    current_start, current_end = ranges[0]
+    for start, end in ranges[1:]:
+        if start <= current_end + 1:  
+            current_end = max(current_end, end)
+        else:
+            merged.append((current_start, current_end))
+            current_start, current_end = start, end
+    merged.append((current_start, current_end))
+    for s, e in merged:
+        answer += (e - s + 1)
     return answer
 
 
