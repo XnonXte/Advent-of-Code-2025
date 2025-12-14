@@ -1,17 +1,17 @@
 import os
 from sys import argv
 
-DAY: int = 0  # Fill in the day.
+DAY = 0  # Fill in the day.
 
 
-def main() -> None:
+def main():
     try:
         if len(argv) != 2:
             print("Usage: day<number>.py <input_path>")
             return
-        data: list[str] = read_data(argv[1])
-        part_1_answer: int = part_1(data)
-        part_2_answer: int = part_2(data)
+        data = read_data(argv[1])
+        part_1_answer = part_1(data)
+        part_2_answer = part_2(data)
         print_answers(part_1_answer, part_2_answer)
     except FileNotFoundError:
         print("Input file not found!")
@@ -19,7 +19,7 @@ def main() -> None:
         print(f"Error: {e}")
 
 
-def print_answers(part_1_answer: int, part_2_answer: int) -> None:
+def print_answers(part_1_answer, part_2_answer):
     print("ADVENT OF CODE 2025")
     print("Copyright (C) XnonXte 2025")
     print("=================================================")
@@ -28,20 +28,20 @@ def print_answers(part_1_answer: int, part_2_answer: int) -> None:
     print(f"Part 2: {part_2_answer}")
 
 
-def read_data(data_path: str) -> list[str]:
+def read_data(data_path):
     with open(data_path) as f:
         return [line.strip() for line in f.readlines()]
 
 
-def part_1(data: list[str]) -> int:
+def part_1(data):
     # TODO: implement part 1
-    answer: int = 0
+    answer = 0
     return answer
 
 
-def part_2(data: list[str]) -> int:
+def part_2(data):
     # TODO: implement part 2
-    answer: int = 0
+    answer = 0
     return answer
 
 

@@ -22,16 +22,16 @@ def main():
         print(f"Error: {e}")
 
 
-def solution(data: list[str]) -> tuple[int, int]:
+def solution(data):
     return part_1(data), part_2(data)
 
 
-def read_data(data_path: str) -> list[str]:
+def read_data(data_path):
     with open(data_path) as f:
         return [line.strip() for line in f.readlines()]
 
 
-def part_1(data: list[str]) -> int:
+def part_1(data):
     # Same as part 2 but without checking if the dial points at 0 at any given rotation.
     answer = 0
     dial = 50
@@ -59,7 +59,7 @@ def part_1(data: list[str]) -> int:
     return answer
 
 
-def part_2(data: list[str]) -> int:
+def part_2(data):
     answer = 0
     dial = 50
     for i in range(len(data)):

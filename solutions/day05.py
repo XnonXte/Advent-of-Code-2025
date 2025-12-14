@@ -1,17 +1,17 @@
 import os
 from sys import argv
 
-DAY: int = 5  # Fill in the day.
+DAY = 5  # Fill in the day.
 
 
-def main() -> None:
+def main():
     try:
         if len(argv) != 2:
             print("Usage: day<number>.py <input_path>")
             return
-        data: list[str] = read_data(argv[1])
-        part_1_answer: int = part_1(data)
-        part_2_answer: int = part_2(data)
+        data = read_data(argv[1])
+        part_1_answer = part_1(data)
+        part_2_answer = part_2(data)
         print_answers(part_1_answer, part_2_answer)
     except FileNotFoundError:
         print("Input file not found!")
@@ -19,7 +19,7 @@ def main() -> None:
         print(f"Error: {e}")
 
 
-def print_answers(part_1_answer: int, part_2_answer: int) -> None:
+def print_answers(part_1_answer, part_2_answer):
     print("ADVENT OF CODE 2025")
     print("Copyright (C) XnonXte 2025")
     print("=================================================")
@@ -28,12 +28,12 @@ def print_answers(part_1_answer: int, part_2_answer: int) -> None:
     print(f"Part 2: {part_2_answer}")
 
 
-def read_data(data_path: str) -> list[str]:
+def read_data(data_path):
     with open(data_path) as f:
         return [line.strip() for line in f.readlines()]
 
 
-def split_data(data: list[str]) -> tuple[list[str], list[str]]:
+def split_data(data):
     # Day 5 only fix.
     try:
         separator = data.index("")
@@ -43,8 +43,8 @@ def split_data(data: list[str]) -> tuple[list[str], list[str]]:
         exit(1)
 
 
-def part_1(data: list[str]) -> int:
-    answer: int = 0
+def part_1(data):
+    answer = 0
     ranges, ids = split_data(data)
     for id in ids:
         id = int(id)
@@ -56,25 +56,23 @@ def part_1(data: list[str]) -> int:
                 break
     return answer
 
-def part_2(data: list[str]) -> int:
-    answer: int = 0
+
+def part_2(data):
+    answer = 0
     id_ranges, _ = split_data(data)
     sorted_id_ranges = sorted(id_ranges, key=lambda r: int(r.split("-")[0]))
-    ranges = [
-        (int(r.split("-")[0]), int(r.split("-")[1]))
-        for r in sorted_id_ranges
-    ]
+    ranges = [(int(r.split("-")[0]), int(r.split("-")[1])) for r in sorted_id_ranges]
     merged = []
     current_start, current_end = ranges[0]
     for start, end in ranges[1:]:
-        if start <= current_end + 1:  
+        if start <= current_end + 1:
             current_end = max(current_end, end)
         else:
             merged.append((current_start, current_end))
             current_start, current_end = start, end
     merged.append((current_start, current_end))
     for s, e in merged:
-        answer += (e - s + 1)
+        answer += e - s + 1
     return answer
 
 

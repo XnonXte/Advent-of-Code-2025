@@ -26,18 +26,18 @@ def main():
         print(f"Error: {e}")
 
 
-def read_data(data_path: str) -> list[str]:
+def read_data(data_path):
     with open(data_path) as f:
         return [line.strip() for line in f.readlines()]
 
 
-def solution(data: list[str]) -> tuple[int, int]:
+def solution(data):
     # Day 2 only fix.
     data = data[0].split(",")
     return part_1(data), part_2(data)
 
 
-def part_1(data: list[str]) -> int:
+def part_1(data):
     answer = 0
     for id_range in data:
         id_range_split = id_range.split("-")
@@ -57,7 +57,7 @@ def part_1(data: list[str]) -> int:
     return answer
 
 
-def part_2(data: list[str]) -> int:
+def part_2(data):
     answer = 0
     for id_range in data:
         id_range_split = id_range.split("-")

@@ -1,16 +1,16 @@
 from sys import argv
 
-DAY: int = 3  # Fill in the day.
+DAY = 3  # Fill in the day.
 
 
-def main() -> None:
+def main():
     try:
         if len(argv) != 2:
             print("Usage: day<number>.py <input_path>")
             return
-        data: list[str] = read_data(argv[1])
-        part_1_answer: int = part_1(data)
-        part_2_answer: int = part_2(data)
+        data = read_data(argv[1])
+        part_1_answer = part_1(data)
+        part_2_answer = part_2(data)
         print_answers(part_1_answer, part_2_answer)
     except FileNotFoundError:
         print("Input file not found!")
@@ -18,7 +18,7 @@ def main() -> None:
         print(f"Error: {e}")
 
 
-def print_answers(part_1_answer: int, part_2_answer: int) -> None:
+def print_answers(part_1_answer, part_2_answer):
     print("ADVENT OF CODE 2025")
     print("Copyright (C) XnonXte 2025")
     print("=================================================")
@@ -27,13 +27,13 @@ def print_answers(part_1_answer: int, part_2_answer: int) -> None:
     print(f"Part 2: {part_2_answer}")
 
 
-def read_data(data_path: str) -> list[str]:
+def read_data(data_path):
     with open(data_path) as f:
         return [line.strip() for line in f.readlines()]
 
 
-def part_1(data: list[str]) -> int:
-    answer: int = 0
+def part_1(data):
+    answer = 0
     for bank in data:
         largest_joltage: int = 0
         for i in range(len(bank) - 1):
@@ -45,8 +45,8 @@ def part_1(data: list[str]) -> int:
     return answer
 
 
-def part_2(data: list[str]) -> int:
-    def max_subseq_12(bank: str) -> int:
+def part_2(data):
+    def max_subseq_12(bank):
         n = len(bank)
         if n < 12:
             return 0
@@ -68,7 +68,7 @@ def part_2(data: list[str]) -> int:
             start = max_idx + 1
         return int("".join(result_digits))
 
-    answer: int = 0
+    answer = 0
     for bank in data:
         largest_joltage = max_subseq_12(bank)
         answer += largest_joltage
