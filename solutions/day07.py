@@ -3,6 +3,7 @@ from sys import argv
 FILE_NAME = __file__.split("\\")[-1]
 DAY = FILE_NAME[3:5]
 
+
 def main():
     try:
         if len(argv) != 2:
@@ -29,12 +30,26 @@ def print_answers(part_1_answer, part_2_answer):
 
 def read_data(data_path):
     with open(data_path) as f:
-        return [line.strip() for line in f.readlines()]
+        data = [line.strip() for line in f.readlines()]
+        put_beam(data, 1, data[0].index("S"))
+        return data
+
+
+def put_beam(data, row, col):
+    data[row] = data[row][:col] + "|" + data[row][col + 1 :]
 
 
 def part_1(data):
-    # TODO: implement part 1
     answer = 0
+    for row in range(len(data) - 1):
+        for col in range(len(data[row])):
+            if data[row][col] == "|":
+                if data[row + 1][col] == "^":
+                    put_beam(data, row + 1, col - 1)
+                    put_beam(data, row + 1, col + 1)
+                    answer += 1
+                else:
+                    put_beam(data, row + 1, col)
     return answer
 
 
