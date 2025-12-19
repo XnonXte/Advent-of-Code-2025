@@ -1,9 +1,8 @@
-import os
 from sys import argv
 import math
 
-DAY = 0  # Fill in the day.
-
+FILE_NAME = __file__.split("\\")[-1]
+DAY = FILE_NAME[3:5]
 
 def main():
     try:
@@ -28,10 +27,9 @@ def print_answers(part_1_answer, part_2_answer):
 
 
 def read_data(data_path):
+    # Day 6 fix
     with open(data_path) as f:
-        return [
-            line.replace("\n", "") + " " for line in f.readlines()
-        ]  # Day 6 only fix.
+        return [line.replace("\n", "") + " " for line in f.readlines()]
 
 
 def calc_total(numbers_set):

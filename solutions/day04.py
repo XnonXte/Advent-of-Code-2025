@@ -2,9 +2,9 @@ import os
 import time
 from sys import argv
 
-DAY = 4  # Fill in the day.
+FILE_NAME = __file__.split("\\")[-1]
+DAY = FILE_NAME[3:5]
 Location = list
-
 
 def main():
     try:
@@ -12,7 +12,7 @@ def main():
             print("Usage: day<number>.py <input_path>")
             return
         data_path = argv[1]
-        data = [list(line) for line in read_data(data_path)]  # Day 4 only fix.
+        data = read_data(data_path)
         part_1_answer = part_1(data)
         part_2_answer = part_2(data)
         print_answers(part_1_answer, part_2_answer)
@@ -33,7 +33,8 @@ def print_answers(part_1_answer, part_2_answer):
 
 def read_data(data_path):
     with open(data_path) as f:
-        return [line.strip() for line in f.readlines()]
+        # Day 4 fix
+        return [list(line.strip()) for line in f.readlines()]
 
 
 def check_is_paper(data, i, j):

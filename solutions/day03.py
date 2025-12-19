@@ -1,7 +1,7 @@
 from sys import argv
 
-DAY = 3  # Fill in the day.
-
+FILE_NAME = __file__.split("\\")[-1]
+DAY = FILE_NAME[3:5]
 
 def main():
     try:

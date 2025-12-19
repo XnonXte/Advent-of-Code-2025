@@ -1,7 +1,7 @@
 from sys import argv
 
-DAY = 2  # Fill in the day.
-
+FILE_NAME = __file__.split("\\")[-1]
+DAY = FILE_NAME[3:5]
 
 def main():
     try:
@@ -9,13 +9,11 @@ def main():
             print("Usage: day<number>.py <input_path>")
             return
         data = read_data(argv[1])
-
         print("ADVENT OF CODE 2025")
         print("Copyright (C) XnonXte 2025")
         print("=================================================")
-
-        part_1_answer, part_2_answer = solution(data)
-
+        part_1_answer = part_1(data)
+        part_2_answer = part_2(data)
         print(f"Day {DAY} answers:")
         print(f"Part 1: {part_1_answer}")
         print(f"Part 2: {part_2_answer}")
@@ -28,13 +26,10 @@ def main():
 
 def read_data(data_path):
     with open(data_path) as f:
-        return [line.strip() for line in f.readlines()]
-
-
-def solution(data):
-    # Day 2 only fix.
-    data = data[0].split(",")
-    return part_1(data), part_2(data)
+        # Day 2 fix
+        data = [line.strip() for line in f.readlines()]
+        data = data[0].split(",")
+        return data
 
 
 def part_1(data):
@@ -47,10 +42,10 @@ def part_1(data):
         while id_int <= id_stop_range:
             id_str = str(id_int)
             id_len = len(id_str)
-            # Length of ID needs to be even to compare each halves.
+            # Length of ID needs to be even to compare each halves
             if id_len % 2 == 0:
                 mid_index = id_len // 2
-                # Split each halves and compare them.
+                # Split each halves and compare them
                 if id_str[:mid_index] == id_str[mid_index:]:
                     answer += id_int
             id_int += 1
@@ -67,7 +62,7 @@ def part_2(data):
         while id_int <= id_stop_range:
             id_str = str(id_int)
             id_len = len(id_str)
-            # Divide id into several same size chunks.
+            # Divide id into several same size chunks
             for size in range(1, id_len):
                 if id_len % size == 0:
                     chunks = [id_str[i : i + size] for i in range(0, id_len, size)]
@@ -75,7 +70,7 @@ def part_2(data):
                     all_equal = all(x == chunks[0] for x in chunks)
                     if all_equal:
                         answer += id_int
-                        break  # Only one of the chunk size need to be equal.
+                        break  # Only one of the chunk size need to be equal
             id_int += 1
     return answer
 

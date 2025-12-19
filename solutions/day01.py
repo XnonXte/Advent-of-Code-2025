@@ -1,6 +1,7 @@
 from sys import argv
 
-DAY = 1  # Fill in the day.
+FILE_NAME = __file__.split("\\")[-1]
+DAY = FILE_NAME[3:5]
 
 
 def main():
@@ -12,7 +13,8 @@ def main():
         print("ADVENT OF CODE 2025")
         print("Copyright (C) XnonXte 2025")
         print("=================================================")
-        part_1_answer, part_2_answer = solution(data)
+        part_1_answer = part_1(data)
+        part_2_answer = part_2(data)
         print(f"Day {DAY} answers:")
         print(f"Part 1: {part_1_answer}")
         print(f"Part 2: {part_2_answer}")
@@ -22,17 +24,13 @@ def main():
         print(f"Error: {e}")
 
 
-def solution(data):
-    return part_1(data), part_2(data)
-
-
 def read_data(data_path):
     with open(data_path) as f:
         return [line.strip() for line in f.readlines()]
 
 
 def part_1(data):
-    # Same as part 2 but without checking if the dial points at 0 at any given rotation.
+    # Same as part 2 but without checking if the dial points at 0 at any given rotation
     answer = 0
     dial = 50
     for i in range(len(data)):
@@ -66,21 +64,21 @@ def part_2(data):
         instruction = data[i]
         rotation = int(instruction[1:])
         if instruction[0] == "L":
-            # Store the remaining rotation after each dial.
+            # Store the remaining rotation after each dial
             remaining_rotation = rotation
             point_at_0 = 0
             while remaining_rotation > 0:
-                # Store how many time(s) the dial point at 0.
+                # Store how many time(s) the dial point at 0
                 if dial == 0:
                     point_at_0 += 1
                 dial -= 1
                 remaining_rotation -= 1
-                # If the dial excedeed the left-most dial.
+                # If the dial excedeed the left-most dial
                 if dial < 0:
                     dial = 99
             answer += point_at_0
         elif instruction[0] == "R":
-            # Same procedure as the left rotation just to the right.
+            # Same procedure as the left rotation just to the right
             remaining_rotation = rotation
             point_at_0 = 0
             while remaining_rotation > 0:
@@ -88,7 +86,7 @@ def part_2(data):
                     point_at_0 += 1
                 dial += 1
                 remaining_rotation -= 1
-                # If the dial excedeed the right-most dial.
+                # If the dial excedeed the right-most dial
                 if dial > 99:
                     dial = 0
             answer += point_at_0

@@ -1,8 +1,7 @@
-import os
 from sys import argv
 
-DAY = 5  # Fill in the day.
-
+FILE_NAME = __file__.split("\\")[-1]
+DAY = FILE_NAME[3:5]
 
 def main():
     try:
@@ -34,7 +33,7 @@ def read_data(data_path):
 
 
 def split_data(data):
-    # Day 5 only fix.
+    # Day 5 only fix
     try:
         separator = data.index("")
         return data[:separator], data[separator + 1 :]
