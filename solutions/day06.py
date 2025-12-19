@@ -16,8 +16,6 @@ def main():
         print_answers(part_1_answer, part_2_answer)
     except FileNotFoundError:
         print("Input file not found!")
-    except Exception as e:
-        print(f"Error: {e}")
 
 
 def print_answers(part_1_answer, part_2_answer):
@@ -31,32 +29,48 @@ def print_answers(part_1_answer, part_2_answer):
 
 def read_data(data_path):
     with open(data_path) as f:
-        return [line.strip() for line in f.readlines()]
+        return [
+            line.replace("\n", "") + " " for line in f.readlines()
+        ]  # Day 6 only fix.
+
+
+def calc_total(numbers_set):
+    total = 0
+    for line in numbers_set:
+        operator = line[-1]
+        numbers = [int(n) for n in line[:-1]]
+        match operator:
+            case "+":
+                total += sum(numbers)
+            case "*":
+                total += math.prod(numbers)
+    return total
 
 
 def part_1(data):
-    def calc_total(data):
-        total = 0
-        for line in data:
-            operator = line[-1]
-            numbers = [int(n) for n in line[:-1]]
-            match operator:
-                case "+":
-                    total += sum(numbers)
-                case "*":
-                    total += math.prod(numbers)
-        return total
-
     answer = 0
-    data = [line.split() for line in data]
-    data = list(map(list, zip(*data)))  
-    answer = calc_total(data)
+    numbers_set = [line.split() for line in data]
+    numbers_set_t = list(map(list, zip(*numbers_set)))
+    answer = calc_total(numbers_set_t)
     return answer
 
 
 def part_2(data):
-    # TODO: implement part 2
     answer = 0
+    numbers_set = []
+    numbers = []
+    rows = len(data) - 1
+    for col in range(len(data[0])):
+        number = [data[row][col] for row in range(rows)]
+        operator = data[rows][col]
+        if operator in ["*", "+"]:
+            numbers.append(operator)
+        if "".join(number) == " " * (rows):
+            numbers_set.append(numbers)
+            numbers = []
+        else:
+            numbers.insert(-1, int("".join(number).strip()))
+    answer = calc_total(numbers_set)
     return answer
 
 
